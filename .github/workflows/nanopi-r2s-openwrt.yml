@@ -32,9 +32,10 @@ jobs:
         git clone --branch "openwrt-18.06-k5.4" --single-branch "https://github.com/willisworley/openwrt" "openwrt"
         sudo chown -R runner:runner "openwrt"
         cd "/home/runner/openwrt"
+        make dirclean
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        make dirclean
+
         patch -p1 < "${GITHUB_WORKSPACE}/patches/1806-modify_for_r2s.patch"
     - name: Build OpenWrt-18.06
       run: |
@@ -49,6 +50,7 @@ jobs:
       if: failure()
       run: |
         cd "/home/runner/openwrt"
+        
         make -j1 V=s
         mv -f "bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz" "../openwrt-18.06-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz"
         mv -f "bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz" "../openwrt-18.06-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz"
