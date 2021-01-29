@@ -32,7 +32,7 @@ jobs:
         git clone --branch "openwrt-18.06-k5.4" --single-branch "https://github.com/willisworley/openwrt" "openwrt"
         sudo chown -R runner:runner "openwrt"
         cd "/home/runner/openwrt"
-        make dirclean
+
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
