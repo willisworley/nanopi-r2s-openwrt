@@ -34,6 +34,7 @@ jobs:
         cd "/home/runner/openwrt"
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+        make dirclean
         patch -p1 < "${GITHUB_WORKSPACE}/patches/1806-modify_for_r2s.patch"
     - name: Build OpenWrt-18.06
       run: |
