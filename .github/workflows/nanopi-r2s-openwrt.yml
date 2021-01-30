@@ -41,11 +41,13 @@ jobs:
     - name: Build OpenWrt-18.06
       run: |
         cd "/home/runner/openwrt"
-        cp -f "${GITHUB_WORKSPACE}/configs/1806-config.seed" ".config"
         
-        make dirclean
-        make -j$(8) download
-        make -j$(1)
+        
+        make defconfig
+        
+        cp -f "${GITHUB_WORKSPACE}/configs/1806-config.seed" ".config"
+        make -j8 download
+        make -j$[$(nproc)+1]
         
         mv -f "bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz" "../openwrt-18.06-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz"
         mv -f "bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz" "../openwrt-18.06-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz"
