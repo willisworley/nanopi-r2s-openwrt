@@ -42,7 +42,8 @@ jobs:
       run: |
         cd "/home/runner/openwrt"
         cp -f "${GITHUB_WORKSPACE}/configs/1806-config.seed" ".config"
-
+        
+        make dirclean
         make -j$(8) download
         make -j$(1)
         
